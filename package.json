@@ -1,0 +1,22 @@
+{
+  "name": "applicationstate-plugin-indexeddb",
+  "version": "0.0.1",
+  "description": "IndexedDB plugin for application state loading and persisting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/claytongulick/applicationstate-plugin-indexeddb.git"
+  },
+  "author": "Clayton Gulick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/claytongulick/applicationstate-plugin-indexeddb/issues"
+  },
+  "homepage": "https://github.com/claytongulick/applicationstate-plugin-indexeddb#readme",
+  "dependencies": {
+    "dexie": "^2.0.4"
+  }
+}
