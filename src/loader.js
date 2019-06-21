@@ -7,10 +7,9 @@ import Dexie from 'dexie';
  * Utility class to handle loading saved state and setting up application state
  */
 class StateLoader {
-    
-    static async load(db_name) {
 
-			  if (!db_name) throw "The load method requires a database name";
+    static async load(db_name) {
+        if (!db_name) throw "The load method requires a database name";
 
         var state = {};
         let db = new Dexie(db_name);
@@ -25,29 +24,29 @@ class StateLoader {
         ApplicationState.disable_notfication();
 
         let count = await db.application_state.count();
-        if(!count)
+        if (!count)
             return ApplicationState.enable_notification();
 
         return db.application_state.each(
             (row) => {
                 //if row is undefined, we've processed all rows
-                if(!row) {
+                if (!row) {
                     ApplicationState.enable_notification();
                 }
-                let {key, value} = row;
+                let { key, value } = row;
                 //deserialize stringified literals, i.e. '1' -> 1
                 // The try catch slows things down, but we don't have a choice.  For the most part
                 // JSON.parse() just takes a value and passes it on if it's a number, date, object or array,
                 // In the case of strings, it sometimes fails.
                 try {
                     value = JSON.parse(value);
-                } catch(e) {
+                } catch (e) {
                     //noop
                 }
                 //put 'app' back in the path
                 try {
-                    ApplicationState._assignValue("app." + key,value);
-                } catch(e) {
+                    ApplicationState._assignValue("app." + key, value);
+                } catch (e) {
                     // we can't do that
                 }
             }
