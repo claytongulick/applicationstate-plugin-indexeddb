@@ -112,7 +112,7 @@ class StatePersistence {
                             return new Promise((resolve, reject) => {resolve();}); //not doing a write, this must be a deleted key
 
                         if (value && (typeof value === 'object') && !immutable) {
-                            let flattened = this.flatten(value, sub_path);
+                            let flattened = ApplicationState.flatten(value, sub_path);
                             return this.db.application_state
                                 .bulkPut(flattened)
                                 .then((result) => {
@@ -153,36 +153,6 @@ class StatePersistence {
                 });
         }
 
-    };
-
-
-    /**
-     * Convert an object to a 2d array, where each element is [key,value]. Key is the full dotted path.
-     * @param obj
-     * @param path
-     * @param flattened
-     * @return object object containing keys and values of the flattened object
-     */
-    flatten(obj, path, flattened) {
-        if(!flattened) flattened = [];
-        if(!path) path = "";
-
-        // convert to a dotted path
-        let keys = Object.keys(obj);
-        for(let i=0; i<keys.length;i++) {
-            let value = obj[keys[i]];
-            let new_path = path + (path ? "." : "") + keys[i];
-            if(value && (typeof value === 'object')) {
-                this.flatten(value, new_path, flattened);
-                continue;
-            }
-
-            value = JSON.stringify(value);
-            if(!value) value = JSON.stringify(null);
-            flattened.push({key: new_path, value: value});
-        }
-        
-        return flattened;
     };
 }
 StatePersistence._instance = new StatePersistence();
