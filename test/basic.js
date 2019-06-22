@@ -2,7 +2,7 @@ const expect = chai.expect;
 
 describe('Basic', () => {
     describe('Get and set', () => {
-        it('should set and get numeric values', () => {
+        it('should set and get numeric values', async () => {
             const test_value = 123;
 
             ApplicationState.set('test_number', test_value);

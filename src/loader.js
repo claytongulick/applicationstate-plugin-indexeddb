@@ -8,9 +8,12 @@ import Dexie from 'dexie';
  */
 class StateLoader {
     
-    static async load() {
+    static async load(db_name) {
+
+			  if (!db_name) throw "The load method requires a database name";
+
         var state = {};
-        let db = new Dexie('jobplus');
+        let db = new Dexie(db_name);
         db.version(1).stores(
             {
                 application_state: 'key'
